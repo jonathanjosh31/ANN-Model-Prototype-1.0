@@ -1,0 +1,109 @@
+Here in this neural network
+the dataset talks about the details of the customer who has either left the bank or not.
+So other than the last columns all other columns are independent variables and the last column is the dependent variable.
+
+
+Hence we will predict the results of the dependents vriables with the information of the independent variable. 
+
+always Choose the necessary columns of the independent variables.Choose the columns which have impact on the dependent variables.
+
+Now Encoding categorial variables
+onehotencoder is used to make sure that the categorical variable is not ordinal.that is there is no relation between the numbers of the categorical variables.
+
+
+here categorical_features parameter has been deprecated in onehotencoder.So use column transformer.
+Also when we have three categories,we remove one column after encoding to avoid dummy variable trap.
+Since the gender contains only 2 categories there is no need for creating dummy variables.
+
+Spliting data into training set and test set.
+
+
+Feature Scaling:(highly Compulsory)
+
+Feature Scaling is done on independent variables so that one variable does'nt dominant the other due to highly variable values.
+
+Why are we doing it? (Feature Scaling is a technique to standardize the independent features present in the data in a fixed range. 
+It is performed during the data pre-processing to handle highly varying magnitudes or values or units. 
+If feature scaling is not done, then a machine learning algorithm tends to weigh greater values,
+ higher and consider smaller values as the lower values, regardless of the unit of the values)
+Alias: To bring higher as well as lower values to fixed range so that all the values are not missed due to dominance.
+
+
+
+Now Importing keras ,tensorflow and theano.
+
+Importing 2 modules:
+Sequential modules and Dense modules to build our layers of the neural network.
+
+There are 2 ways of initialising a DL model:
+1)Defining a Seq of layers
+2)defining a graph
+
+Here we did the first one.
+
+
+Initialising the ANN -Notes in Prog itself.
+
+Layers: Innner ----> Hidden ------> Output
+
+How the ANN works?
+Step 1: Randomly initialise weights to small nos close to 0.
+Done using Dense Function
+ 
+Step 2: Input first Observation row of dataset in input layer, (each feature in one input node).
+	No of nodes in input layers = No of independent variables in dataset.
+
+Step 3: Forward Propagation. (Notes) or watch video.
+Here we are choosing the rectifier function since it is one of the best.(For Hidden layers)
+And the sigmoid function for the output layer since it gives the probability of occurence/happening and hence values from 0 to 1.
+
+Step 4:Comparing predicted results to the actual result.Measure the generated error.
+
+Step 5:Back Propagation for learning and correcting all the errors as much as possible.
+
+Step 6:Repeat 1-5 and do
+either Re-enforcement learning(Updating the weights after each observation.)
+or Batch Learning(Updating the weights after a batch/set of observations.)
+
+Step-7: Now 1 epoch will be completed(When whole training set passed through the ANN).Redo more epochs for max performance.
+
+
+While Creating the Input as well as Hidden Layers:
+While adding to the classifier we give all the info about how weights are dated,Activation function used or how many nodes are there on the input layers,etc stuff like tht.
+Also the number of nodes to be given in the hidden layer comes out of practise.You can experiment it with a technique called parameter tuning like K4 cross validation which u create a validation set rather than a test or training set.
+If you don't know any techinique you can take average of the no of nodes in input as well as output layers.
+
+Now specify ur arguments in the Dense Funtion.The must provide arguments are Dense(units,kernel_initializer='',activation = '',input_dim=**)
+kernel_initializer - Gives/Initialises weigths to small numbers randomly close to zero.
+
+Also if your dependent variables is having more than 2 categories then the syntax/arguments given in the output layer will change.Like we have to give softmax,etc.For more details read Documentation or watch video.
+
+Now compiling the ANN.We use the compile method in the Sequential class.
+Parameters:
+optimizer -- the algo used to find the optimal set of weights.
+loss -- correspon.ds to loss fuction with this stochastic gradient algo.(Also if ur dependent variable has more than 2 categories the functions differ rather than a binary dependent variable i.e with only 2 outputs).
+metrics -- criteria that we choose to evaluate our model.
+
+Fitting the ANN to the training set
+Using the fit method
+Arguments:
+1)Dataset which we want to train
+2)Choosing the type of learning for the training set given.(batch_size)
+3)The number of epochs done by the ANN.(nb_epoch)
+
+Actuallu you  need to experiment and have a lot of practise to come up with the optimum batch size and no. of epochs.But for now we use fixed size of batch no. and epochs.
+
+Predicting the results.
+While coming up with the confusion matrx,the predicted results will be in the form of probabilities.But for the confusion matrix we need the results in either true or false.
+Now here we are taking the results as if prob>0.5 then it is true or else false.But this may vary with different kinds of observations like when the results are very sensitive,for example,medical results,etc.
+Implies now here we take the threshold as 50% percent.
+Now finding the confusion matrix.	
+In confusion matrix:
+According to the test set provided,
+(0,0) and (1,1) gives correct no of predictions.
+(0,1) and (1,0) gives the incorrect no of predictions.
+
+Now computing Accuracy:
+Accuracy = (no of correct predictions)/(Total no of predictions) 
+
+********************Note:If you did parameter tuning as mentioned before then you would get an improved and better accuracy.****************************
